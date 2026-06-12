@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+:root {
+  /* High contrast light mode (Enterprise Government Theme) */
+  --background: #f8fafc; /* Slate 50 */
+  --foreground: #0f172a; /* Slate 900 */
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  
+  --primary: #0f2d59; /* Crisp Navy Blue */
+  --primary-foreground: #ffffff;
+  
+  --secondary: #475569; /* Slate 600 */
+  --secondary-foreground: #ffffff;
+  
+  --muted: #64748b; /* Slate 500 */
+  --muted-foreground: #0f172a;
+  
+  --border: #cbd5e1; /* Slate 300 - high contrast border */
+  --border-focus: #0f2d59;
+  
+  /* Status Color Tokens */
+  --success-bg: #dcfce7;
+  --success-text: #166534;
+  
+  --error-bg: #fee2e2;
+  --error-text: #991b1b;
+  
+  --warning-bg: #fef9c3;
+  --warning-text: #854d0e;
+  
+  --font-sans: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 16px; /* High legibility minimum font size */
+  line-height: 1.5;
+}
+
+/* Custom Accessibility Styles */
+.focus-ring:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* Custom Scrollbar for professional data tables */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}

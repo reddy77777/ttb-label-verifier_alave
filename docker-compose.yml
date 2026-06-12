@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ttb-verifier-api
+    ports:
+      - "8000:8000"
+    environment:
+      - ENV=development
+      - PORT=8000
+    networks:
+      - ttb-network
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ttb-verifier-web
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NODE_ENV=development
+    depends_on:
+      - api
+    networks:
+      - ttb-network
+
+networks:
+  ttb-network:
+    name: ttb-network
+    driver: bridge
