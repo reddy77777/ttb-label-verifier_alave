@@ -26,7 +26,50 @@ To run the entire system locally inside a secure, air-gapped containerized netwo
 
 ---
 
-## 🧪 Local Testing Suite
+## 🧪 Step-by-Step Verification & Testing Guide
+
+This guide describes how to run a complete end-to-end audit using the included test label images.
+
+### Step 1: Access the Portal & Log In
+1. Navigate to the live deployment URL: **[https://alave-verifier.web.app](https://alave-verifier.web.app)**
+   *(Or, if running locally, start the containers with `docker-compose up --build` and navigate to [http://localhost:3000](http://localhost:3000)).*
+2. On the Government SSO Sign-in screen:
+   * **Federal Email Address**: Enter any valid email (e.g., `agent.smith@ttb.gov`).
+   * **SSO Password**: Enter any password.
+   * **Terms of Access**: Check the box acknowledging the U.S. Government warning banner.
+3. Click **Authenticate & Enter**.
+
+### Step 2: Dashboard & Batch Uploading
+1. Once logged in, you will see a list of active TTB applications:
+   * `TTB-2024-001` (Old Tom Distillery Bourbon)
+   * `TTB-2024-002` (Stone's Throw IPA)
+   * `TTB-2024-003` (Château de Valois Wine)
+2. Drag and drop (or click to upload) the test images from the [test_labels/](file:///Users/bhupinderchawla/Documents/Apps/ttb-label-verifier/test_labels/) directory into the file uploader at the top of the dashboard.
+3. The matching engine will automatically associate each label image with its corresponding database application using the filename prefix (e.g., `TTB-2024-001_perfect.png` maps to application `TTB-2024-001`).
+
+### Step 3: Run the Test Pack Scenarios
+
+Test the compliance engine with these 5 scenarios from the [test_labels/](file:///Users/bhupinderchawla/Documents/Apps/ttb-label-verifier/test_labels/) folder:
+
+| Test Case | Label Image | Expected Result | Why? |
+| :--- | :--- | :--- | :--- |
+| **1. Perfect Match** | `TTB-2024-001_perfect.png` | **Compliant** (Green) | Extracted text matches database expected values exactly. |
+| **2. ABV Mismatch** | `TTB-2024-001_mismatch_abv.png` | **Non-Compliant** (Red) | Label has **40% ALC/VOL** but database expects **45% Alc./Vol. (90 Proof)**. |
+| **3. Government Warning Casing** | `TTB-2024-001_mismatch_warning_case.png` | **Non-Compliant** (Red) | Label text uses `"Government warning:"` prefix, failing strict TTB policy requiring `"GOVERNMENT WARNING:"` in ALL CAPS. |
+| **4. Fuzzy String Matching** | `TTB-2024-002_fuzzy_match.png` | **Compliant** (Green with Fuzzy Tag) | Gracefully matches lowercase/capitalization variations (`STONE'S THROW` vs `Stone's Throw`). |
+| **5. Perfect Match (Wine)** | `TTB-2024-003_perfect.png` | **Compliant** (Green) | Extracted wine label fields match database values exactly. |
+
+### Step 4: Reviewing Discrepancies & Overrides
+1. Click on any row in the applications table to open the split-screen audit view.
+2. Review the **Expected (Database)** vs. **Extracted (Label OCR)** comparison matrix. Casing warnings and unit mismatches are highlighted in yellow/red.
+3. If a scan was imperfect, you can perform a **Manual Audit Override**:
+   * Change the compliance status using the status toggle at the bottom of the audit pane.
+   * Add comments in the **Audit Notes** text field (e.g., *"Manually verified ABV matches database despite OCR resolution error"*).
+   * Click **Submit Audit Decision** to persist the decision in browser state.
+
+---
+
+## 💻 Local Testing Suite (Automated API Tests)
 
 The backend contains a test suite verifying fuzzy string matching, ABV/volume unit normalizations, and strict warning text checks.
 
@@ -45,6 +88,7 @@ To run the tests locally on your host machine:
    ```bash
    PYTHONPATH=backend pytest backend/tests
    ```
+
 
 ---
 
