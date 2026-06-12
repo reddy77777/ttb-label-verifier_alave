@@ -34,8 +34,8 @@ This guide describes how to run a complete end-to-end audit using the included t
 1. Navigate to the live deployment URL: **[https://alave-verifier.web.app](https://alave-verifier.web.app)**
    *(Or, if running locally, start the containers with `docker-compose up --build` and navigate to [http://localhost:3000](http://localhost:3000)).*
 2. On the Government SSO Sign-in screen:
-   * **Federal Email Address**: Enter any valid email (e.g., `agent.smith@ttb.gov`).
-   * **SSO Password**: Enter any password.
+   * **Federal Email Address**: Enter agent@ttb.gov
+   * **SSO Password**: password
    * **Terms of Access**: Check the box acknowledging the U.S. Government warning banner.
 3. Click **Authenticate & Enter**.
 
@@ -44,12 +44,12 @@ This guide describes how to run a complete end-to-end audit using the included t
    * `TTB-2024-001` (Old Tom Distillery Bourbon)
    * `TTB-2024-002` (Stone's Throw IPA)
    * `TTB-2024-003` (Château de Valois Wine)
-2. Drag and drop (or click to upload) the test images from the [test_labels/](file:///Users/bhupinderchawla/Documents/Apps/ttb-label-verifier/test_labels/) directory into the file uploader at the top of the dashboard.
+2. Drag and drop (or click to upload) the test images from the [test_labels/] directory into the file uploader at the top of the dashboard.
 3. The matching engine will automatically associate each label image with its corresponding database application using the filename prefix (e.g., `TTB-2024-001_perfect.png` maps to application `TTB-2024-001`).
 
 ### Step 3: Run the Test Pack Scenarios
 
-Test the compliance engine with these 5 scenarios from the [test_labels/](file:///Users/bhupinderchawla/Documents/Apps/ttb-label-verifier/test_labels/) folder:
+Test the compliance engine with these 5 scenarios from the [test_labels/] folder:
 
 | Test Case | Label Image | Expected Result | Why? |
 | :--- | :--- | :--- | :--- |
